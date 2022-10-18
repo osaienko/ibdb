@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import {useParams} from 'react-router-dom'
 import axios from 'axios'
 import styled from 'styled-components'
+
+import Header from './Header'
+import ReviewForm from './ReviewForm'
 
 const Wrapper = styled.div`
     margin-left: auto;
@@ -24,14 +27,11 @@ const Main = styled.div`
     padding-left: 50px; 
 `
 
-const ReviewForm = styled.div``
 const Reviews = styled.div``
-
-import Header from './Header'
 
 const Beer = (props) => {
     const [beer, setBeer] = useState({})
-    const [review, setReview] = useState({})
+    const [review, setReview] = useState({reviewer: '', description: '', score: 0, })
     const [loaded, setLoaded] = useState(false)
     const {slug} = useParams()
 
@@ -46,21 +46,51 @@ const Beer = (props) => {
             .catch(resp => console.log(resp))
     }, [])
 
+    const handleChange = (e) => {
+        e.preventDefault()
+
+        setReview(Object.assign({}, review, {[e.target.name]: e.target.value}))
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        const csrfToken = document.querySelector('[name=csrf-token]').content
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+
+        const beer_id = beer.data.id
+        axios.post('/api/v1/reviews', {review, beer_id})
+            .then(resp => {
+                const included = [...beer.included, resp.data.data]
+                setBeer({...beer, included})
+                setReview({reviewer: '', description: '', score: 0, })
+            })
+            .catch(resp => {})
+    }
+
     return (
         <Wrapper>
-            <Column>
-                <Main>
-                    {loaded &&
-                        <Header
-                        attributes={beer.data.attributes}
-                        reviews={beer.included}
-                    />}
-                    <div className="reviews"></div>
-                </Main>
-            </Column>
-            <Column>
-                <div className="review-form">[Review Form]</div>
-            </Column>
+            { loaded &&
+                <Fragment>
+                    <Column>
+                        <Main>
+                            <Header
+                            attributes={beer.data.attributes}
+                            reviews={beer.included}
+                            />
+                            <div className="reviews"></div>
+                        </Main>
+                    </Column>
+                    <Column>
+                        <ReviewForm
+                            handleChange={handleChange}
+                            handleSubmit={handleSubmit}
+                            attributes={beer.data.attributes}
+                            review={review}
+                        />
+                    </Column>
+                </Fragment>
+            }
         </Wrapper>
     )
 }
