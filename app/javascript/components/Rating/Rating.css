@@ -13,6 +13,6 @@
 }
 
 .star-wrapper::before, .stars::before {
-    font-family: "FontAwesome";
+    font-family: "FontAwesome", serif;
     content: "\f005 \0020 \f005 \0020 \f005 \0020 \f005 \0020 \f005";
 }

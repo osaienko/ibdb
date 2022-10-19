@@ -28,9 +28,7 @@ const Main = styled.div`
     padding-left: 50px; 
 `
 
-const Reviews = styled.div``
-
-const Beer = (props) => {
+const Beer = () => {
     const [beer, setBeer] = useState({})
     const [review, setReview] = useState({reviewer: '', description: '', score: 0, })
     const [loaded, setLoaded] = useState(false)

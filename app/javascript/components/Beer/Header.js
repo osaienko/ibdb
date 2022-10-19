@@ -17,7 +17,6 @@ const TotalReviews = styled.div`
     font-size: 18px;
     padding: 10px 0;
 `
-// const StarRating = styled.div``
 const TotalOutOf = styled.div`
     font-size: 18px;
     font-weight: bold;
@@ -32,7 +31,6 @@ const Header = (props) => {
         <Wrapper>
             <h1><img src={image_url} alt={name}/>{name}</h1>
             <TotalReviews>{totalReviews} User Reviews</TotalReviews>
-            {/*<StarRating>skip for now</StarRating>*/}
             <TotalOutOf>{avg_score} out of 5</TotalOutOf>
         </Wrapper>
     )
