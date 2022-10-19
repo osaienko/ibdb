@@ -10,3 +10,7 @@
 ### Also including
 * react: `^18.2.0`
 * react-dom: `^18.2.0`
+* react-router: `6.4.2`
+
+### Running dev server
+`./bin/webpack-dev-server` & `rails s`
