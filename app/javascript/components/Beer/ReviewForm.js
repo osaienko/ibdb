@@ -19,6 +19,7 @@ const RatingBox = styled.div`
     justify-content: center;
     flex-direction: row-reverse;
     position: relative;
+    margin-top: 12px;
     
     input {
         display: none;
@@ -44,7 +45,63 @@ const RatingBox = styled.div`
         background-image: url('data:image/svg+xml;charset=UTF-8, ${Hover}');
     }
 `
-const RatingTitle = styled.div``
+const RatingTitle = styled.div`
+    padding-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+`
+const Headline = styled.div`
+    padding: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+`
+
+const Field = styled.div`
+    border-radius: 4px;
+    
+    input {
+        min-height: 50px;
+        border-radius: 4px;
+        border: 1px solid #e6e6e6;
+        margin: 0 0 12px 0;
+        padding: 12px;
+        width: 96%;
+    }
+    
+    textarea {
+        width: 100%;
+        min-height: 80px;
+        border: 1px solid #e6e6e6;
+        margin: 12px 0;
+        padding: 12px; 
+    }
+`
+const Wrapper = styled.div`
+    background: #fff;
+    padding: 20px;
+    background: #000;
+    height: 100vh;
+    padding-top: 100px;
+`
+const SubmitButton = styled.button`
+    color: #fff;
+    background: #333;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: ease-in-out 0.1s;
+    border: 1px solid #fff;
+    width: 100%;
+    margin-top: 20px;
+    
+    &:hover {
+        color: #000;
+        background: #fff;
+        border: 1px solid #fff;
+    }
+`
 
 const ReviewForm = (props) => {
 
@@ -58,26 +115,26 @@ const ReviewForm = (props) => {
     })
 
     return (
-        <div className="wrapper">
+        <Wrapper>
             <form onSubmit={props.handleSubmit}>
-                <div>Have you tried {props.attributes.name}? Rate it! </div>
-                <div className="field">
+                <Headline>Have you tried {props.attributes.name}? Rate it! </Headline>
+                <Field>
                     <input onChange={props.handleChange} value={props.review.reviewer} type="text" name="name" placeholder="Reviewer's Name"/>
-                </div>
-                <div className="field">
+                </Field>
+                <Field>
                     <input onChange={props.handleChange} value={props.review.description} type="text" name="description" placeholder="Review Description"/>
-                </div>
-                <div className="field">
+                </Field>
+                <Field>
                     <RatingContainer>
-                        <div className="rating-title-text">Rate this Beer.</div>
+                        <RatingTitle>Rate this Beer.</RatingTitle>
                         <RatingBox>
                             {ratingOptions}
                         </RatingBox>
                     </RatingContainer>
-                </div>
-                <button type="submit">Submit Review</button>
+                </Field>
+                <SubmitButton type="submit">Submit Review</SubmitButton>
             </form>
-        </div>
+        </Wrapper>
     )
 }
 
