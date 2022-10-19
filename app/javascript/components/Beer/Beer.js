@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import Header from './Header'
 import ReviewForm from './ReviewForm'
+import Review from './Review'
 
 const Wrapper = styled.div`
     margin-left: auto;
@@ -74,6 +75,18 @@ const Beer = (props) => {
         setReview({...review, score})
     }
 
+    let reviews
+    if (loaded && beer.included) {
+        reviews = beer.included.map( (item, index) => {
+            return (
+                <Review
+                    key={index}
+                    attributes={item.attributes}
+                />
+            )
+        })
+    }
+
     return (
         <Wrapper>
             { loaded &&
@@ -84,7 +97,7 @@ const Beer = (props) => {
                             attributes={beer.data.attributes}
                             reviews={beer.included}
                             />
-                            <div className="reviews"></div>
+                            {reviews}
                         </Main>
                     </Column>
                     <Column>
