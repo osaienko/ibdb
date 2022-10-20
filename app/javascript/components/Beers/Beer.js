@@ -50,7 +50,7 @@ const Beer = (props) => {
                 <img src={props.attributes.image_url} alt={props.attributes.name}/>
             </BeerLogo>
             <BeerName>{props.attributes.name}</BeerName>
-            <Rating score={props.attributes.avg_score}/>
+            <Rating value={props.attributes.avg_score}/>
             <LinkWrapper>
                 <Link to={`/beers/${props.attributes.slug}`}>View Beer</Link>
             </LinkWrapper>

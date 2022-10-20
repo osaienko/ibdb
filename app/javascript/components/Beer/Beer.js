@@ -30,7 +30,7 @@ const Main = styled.div`
 
 const Beer = () => {
     const [beer, setBeer] = useState({})
-    const [review, setReview] = useState({reviewer: '', description: '', score: 0, })
+    const [review, setReview] = useState({reviewer: '', description: '', score: 0, color: 0, aroma: 0, flavor: 0, body: 0})
     const [loaded, setLoaded] = useState(false)
     const {slug} = useParams()
 
@@ -62,15 +62,15 @@ const Beer = () => {
             .then(resp => {
                 const included = [...beer.included, resp.data.data]
                 setBeer({...beer, included})
-                setReview({reviewer: '', description: '', score: 0, })
+                setReview({reviewer: '', description: '', score: 0, color: 0, aroma: 0, flavor: 0, body: 0})
             })
             .catch(resp => {})
     }
 
-    const setRating = (score, e) => {
+    const setRating = (valueObj, e) => {
         e.preventDefault()
 
-        setReview({...review, score})
+        setReview({...review, ...valueObj})
     }
 
     let reviews

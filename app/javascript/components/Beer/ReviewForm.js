@@ -82,7 +82,7 @@ const Wrapper = styled.div`
     padding: 20px;
     background: #000;
     height: 100vh;
-    padding-top: 100px;
+    padding-top: 50px;
 `
 const SubmitButton = styled.button`
     color: #fff;
@@ -95,6 +95,7 @@ const SubmitButton = styled.button`
     border: 1px solid #fff;
     width: 100%;
     margin-top: 20px;
+    margin-bottom: 20px;
     
     &:hover {
         color: #000;
@@ -102,14 +103,58 @@ const SubmitButton = styled.button`
         border: 1px solid #fff;
     }
 `
+const RatingLabel = styled.span`
+    // padding: 10px 0 10px 0;
+    font-size: 20px;
+    font-weight: bold;
+`
 
 const ReviewForm = (props) => {
 
-    const ratingOptions = [5,4,3,2,1].map( (score, index) => {
+    // TODO: 1. move out duplicated code in the following functions
+    //         2. fix the bug with the star selection showing up not properly
+
+    const scoreRatingOptions = [5,4,3,2,1].map( (score, index) => {
         return (
             <Fragment key={index}>
-                <input type="radio" value={score} checked={props.review.score === score} name="rating" onChange={e => console.log(e)} id={`rating-${score}`}/>
-                <label onClick={props.setRating.bind(this, score)}></label>
+                <input type="radio" value={score} checked={props.review.score === score} name="rating" onChange={e => console.log(e)} id={`rating-score-${score}`}/>
+                <label onClick={props.setRating.bind(this, {score: score})}></label>
+            </Fragment>
+        )
+    })
+
+    const colorRatingOptions = [5,4,3,2,1].map( (color, index) => {
+        return (
+            <Fragment key={index}>
+                <input type="radio" value={color} checked={props.review.color === color} name="rating" onChange={e => console.log(e)} id={`rating-color-${color}`}/>
+                <label onClick={props.setRating.bind(this, {color: color})}></label>
+            </Fragment>
+        )
+    })
+
+    const aromaRatingOptions = [5,4,3,2,1].map( (aroma, index) => {
+        return (
+            <Fragment key={index}>
+                <input type="radio" value={aroma} checked={props.review.aroma === aroma} name="rating" onChange={e => console.log(e)} id={`rating-aroma-${aroma}`}/>
+                <label onClick={props.setRating.bind(this, {aroma: aroma})}></label>
+            </Fragment>
+        )
+    })
+
+    const flavorRatingOptions = [5,4,3,2,1].map( (flavor, index) => {
+        return (
+            <Fragment key={index}>
+                <input type="radio" value={flavor} checked={props.review.flavor === flavor} name="rating" onChange={e => console.log(e)} id={`rating-flavor-${flavor}`}/>
+                <label onClick={props.setRating.bind(this, {flavor: flavor})}></label>
+            </Fragment>
+        )
+    })
+
+    const bodyRatingOptions = [5,4,3,2,1].map( (body, index) => {
+        return (
+            <Fragment key={index}>
+                <input type="radio" value={body} checked={props.review.body === body} name="rating" onChange={e => console.log(e)} id={`rating-body-${body}`}/>
+                <label onClick={props.setRating.bind(this, {body: body})}></label>
             </Fragment>
         )
     })
@@ -119,7 +164,7 @@ const ReviewForm = (props) => {
             <form onSubmit={props.handleSubmit}>
                 <Headline>Have you tried {props.attributes.name}? Rate it! </Headline>
                 <Field>
-                    <input onChange={props.handleChange} value={props.review.reviewer} type="text" name="name" placeholder="Reviewer's Name"/>
+                    <input onChange={props.handleChange} value={props.review.reviewer} type="text" name="reviewer" placeholder="Reviewer's Name"/>
                 </Field>
                 <Field>
                     <input onChange={props.handleChange} value={props.review.description} type="text" name="description" placeholder="Review Description"/>
@@ -127,8 +172,25 @@ const ReviewForm = (props) => {
                 <Field>
                     <RatingContainer>
                         <RatingTitle>Rate this Beer.</RatingTitle>
+                        <RatingLabel>Score</RatingLabel>
                         <RatingBox>
-                            {ratingOptions}
+                            {scoreRatingOptions}
+                        </RatingBox>
+                        <RatingLabel>Color</RatingLabel>
+                        <RatingBox>
+                            {colorRatingOptions}
+                        </RatingBox>
+                        <RatingLabel>Aroma</RatingLabel>
+                        <RatingBox>
+                            {aromaRatingOptions}
+                        </RatingBox>
+                        <RatingLabel>Flavor</RatingLabel>
+                        <RatingBox>
+                            {flavorRatingOptions}
+                        </RatingBox>
+                        <RatingLabel>Body</RatingLabel>
+                        <RatingBox>
+                            {bodyRatingOptions}
                         </RatingBox>
                     </RatingContainer>
                 </Field>
